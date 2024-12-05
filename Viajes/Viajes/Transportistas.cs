@@ -16,5 +16,26 @@ namespace Viajes
         {
             InitializeComponent();
         }
+
+        private void btnRV_Click(object sender, EventArgs e)
+        {
+            Hide();
+            RTrans pantalla = new RTrans();
+            pantalla.Show();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Hide();
+            Home pantalla = new Home();
+            pantalla.Show();
+        }
+
+        private void btnRVD_Click(object sender, EventArgs e)
+        {
+            Hide();
+            Estadisticas pantalla = new Estadisticas();
+            pantalla.Show();
+        }
     }
 }

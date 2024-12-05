@@ -26,11 +26,32 @@ namespace Viajes
             SetMyCustomFormat();
 
             cargar_datos();
+            dataGridView1.Enabled = false;
+            dataGridView2.Enabled = false;
             dateTimePicker1.Enabled = false;
             txtDist.Enabled = false;
+            txtPre.Enabled = false;
 
             cargarDGV();
             cargarDGV2();
+
+            if(Form1.Rol != "Gerente de Tienda")
+            {
+                txtID.Enabled = false;
+                txtPre.Enabled = false;
+                comboBox1.Enabled = false;
+                comboBox2.Enabled = false;
+                button2.Enabled = false;
+                dateTimePicker1.Enabled = false;
+            }
+            else
+            {
+                txtID.Enabled = true;
+                comboBox1.Enabled = true;
+                comboBox2.Enabled = true;
+                button2.Enabled = true;
+                dateTimePicker1.Enabled = true;
+            }
         }
 
         public void cargarDGV()
@@ -177,10 +198,6 @@ namespace Viajes
             {
                 MessageBox.Show("Introduzca un Codigo de Viaje", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            else if (txtPre.Text == "")
-            {
-                MessageBox.Show("Ingresar precio por favor", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
             else
             {
                 coneccion.Open();
@@ -223,20 +240,32 @@ namespace Viajes
                             {
                                 coneccion.Close();
                                 coneccion.Open();
+                                SqlCommand cdm = new SqlCommand("Select Precio from Transportista", coneccion);
+                                SqlDataReader le = cdm.ExecuteReader();
+                                if (le.Read())
+                                {
+                                    string precio = le["Precio"].ToString();
+                                    double pkm = Int64.Parse(precio) * Int64.Parse(txtDist.Text);
+                                    txtPre.Text = pkm.ToString();
 
-                                SqlCommand cmd3 = new SqlCommand("Insert into Viaje_Detalle values ('" + txtID.Text + "','" + comboBox1.SelectedValue.ToString() + "','" + comboBox2.SelectedValue.ToString() + "','" + Fecha + "','" + txtPre.Text + "','" + Form1.User.ToString() + "')", coneccion);
-                                cmd3.ExecuteNonQuery();
-                                coneccion.Close();
-                                coneccion.Open();
-                                SqlCommand cmd4 = new SqlCommand("UPDATE Viaje SET Total_Precio = (Total_Precio + '" + int.Parse(txtPre.Text) + "'), Total_KM = (Total_KM + '" + int.Parse(txtDist.Text) + "') WHERE ID_Viaje = '" + txtID.Text + "';", coneccion);
-                                cmd4.ExecuteNonQuery();
-                                coneccion.Close();
+                                    coneccion.Close();
 
-                                MessageBox.Show("Registro guardado", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                cargarDGV();
-                                txtID.Text = "";
-                                txtDist.Text = "";
-                                txtPre.Text = "";
+                                    coneccion.Open();
+
+                                    SqlCommand cmd3 = new SqlCommand("Insert into Viaje_Detalle values ('" + txtID.Text + "','" + comboBox1.SelectedValue.ToString() + "','" + comboBox2.SelectedValue.ToString() + "','" + Fecha + "','" + pkm + "','" + Form1.User.ToString() + "')", coneccion);
+                                    cmd3.ExecuteNonQuery();
+                                    coneccion.Close();
+                                    coneccion.Open();
+                                    SqlCommand cmd4 = new SqlCommand("UPDATE Viaje SET Total_Precio = (Total_Precio + '" + int.Parse(txtPre.Text) + "'), Total_KM = (Total_KM + '" + int.Parse(txtDist.Text) + "') WHERE ID_Viaje = '" + txtID.Text + "';", coneccion);
+                                    cmd4.ExecuteNonQuery();
+                                    coneccion.Close();
+
+                                    MessageBox.Show("Registro guardado", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    cargarDGV();
+                                    txtID.Text = "";
+                                    txtDist.Text = "";
+                                    txtPre.Text = "";
+                                }
                             }
                         }
                     }

@@ -18,11 +18,12 @@ namespace Viajes
             if (Form1.Rol == "Gerente de Tienda")
             {
                 btnRVD.Enabled = true;
+                btnRV.Enabled = true;
             }
             else
             {
-                btnRVD.Enabled = false;
-                btnRVD.Enabled = false;
+                btnRVD.Enabled = true;
+                btnRV.Enabled = false;
             }
         }
 

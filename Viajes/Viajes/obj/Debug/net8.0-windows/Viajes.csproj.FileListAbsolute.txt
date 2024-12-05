@@ -29,3 +29,5 @@ C:\Users\PC\source\repos\Viajes\Viajes\obj\Debug\net8.0-windows\Viajes.Viajes.re
 C:\Users\PC\source\repos\Viajes\Viajes\obj\Debug\net8.0-windows\Viajes.sourcelink.json
 C:\Users\PC\source\repos\Viajes\Viajes\obj\Debug\net8.0-windows\Viajes.Rviajes.resources
 C:\Users\PC\source\repos\Viajes\Viajes\obj\Debug\net8.0-windows\Viajes.ViajeG.resources
+C:\Users\PC\source\repos\Viajes\Viajes\obj\Debug\net8.0-windows\Viajes.Estadisticas.resources
+C:\Users\PC\source\repos\Viajes\Viajes\obj\Debug\net8.0-windows\Viajes.RTrans.resources
